@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.appspot.roovemore.slim3.modelcache</groupId>
+  <artifactId>roovemore-slim3-modelcache</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20160805170420</lastUpdated>
+  </versioning>
+</metadata>
