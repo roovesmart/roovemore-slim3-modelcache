@@ -44,9 +44,11 @@
         <altDeploymentRepository>GitHub ${project.artifactId} Repository::default::https://github.com/roovesmart/${project.artifactId}/mvn-repo</altDeploymentRepository>
          -->
 		<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+
       </configuration>
     </plugin>
 
+    <!--
     <plugin>
       <groupId>com.github.github</groupId>
       <artifactId>site-maven-plugin</artifactId>
@@ -70,7 +72,7 @@
         </execution>
       </executions>
     </plugin>
-
+ -->
 
 
   </plugins>
