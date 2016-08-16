@@ -4,9 +4,8 @@
   <artifactId>roovemore-slim3-modelcache</artifactId>
   <versioning>
     <versions>
-      <version>1.0-SNAPSHOT</version>
       <version>2.0-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20160816103312</lastUpdated>
+    <lastUpdated>20160816104426</lastUpdated>
   </versioning>
 </metadata>
