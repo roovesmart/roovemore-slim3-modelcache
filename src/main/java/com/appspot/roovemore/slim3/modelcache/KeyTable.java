@@ -8,6 +8,12 @@ import org.slim3.datastore.Model;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * This table for managing the Model key list
+ *
+ * @author roove
+ *
+ */
 @Model(schemaVersion = 1)
 public class KeyTable implements Serializable {
 
@@ -19,10 +25,27 @@ public class KeyTable implements Serializable {
     @Attribute(version = true)
     private Long version;
 
+    /**
+     * Entity keyList.
+     */
     private List<Key> entityKeyList;
+
+    /**
+     * Sets the entity keyList.
+     *
+     * @param entityKeyList
+     */
     public void setEntityKeyList(List<Key> entityKeyList) {
         this.entityKeyList = entityKeyList;
     }
+
+    /**
+     * Returns the entityKeyList.
+     *
+     * @return entityKeyList.
+     * 			the entityKeyList.
+     *
+     */
     public List<Key> getEntityKeyList() {
         return entityKeyList;
     }

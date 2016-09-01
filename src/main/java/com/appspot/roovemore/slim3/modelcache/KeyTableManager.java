@@ -9,8 +9,25 @@ import org.slim3.memcache.Memcache;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * To operate the KeyTable.
+ *
+ * @see com.appspot.roovemore.slim3.modelcache.KeyTable
+ *
+ * @author roove
+ *
+ */
 public class KeyTableManager {
 
+	/**
+	 * Verify that the KeyTable exist.
+	 *
+	 * @param keyTable
+	 * 			ths keyTable (Model.class)
+	 * @return
+	 * 			true: exist.
+	 * 			false: not exits.
+	 */
 	public static boolean isExistKeyTable(KeyTable keyTable) {
 
 		if (keyTable == null)
@@ -30,6 +47,14 @@ public class KeyTableManager {
 		return true;
 	}
 
+	/**
+	 * Get KeyTable from datastore.
+	 *
+	 * @param modelClass
+	 * 			Acquisition target Model Class.
+	 *
+	 * @return the KeyTable.
+	 */
 	public static KeyTable getDb(Class<?> modelClass) {
 		ModelUtil.checkModelClass(modelClass);
 		return Datastore.getOrNull(KeyTable.class,
@@ -37,6 +62,14 @@ public class KeyTableManager {
 						));
 	}
 
+	/**
+	 * Get KeyTable from memcache.
+	 *
+	 * @param modelClass
+	 * 			Acquisition target Model Class.
+	 *
+	 * @return the KeyTable.
+	 */
 	public static KeyTable getCache(Class<?> modelClass) {
 		ModelUtil.checkModelClass(modelClass);
 
@@ -70,6 +103,15 @@ public class KeyTableManager {
 		return keyTable;
 	}
 
+	/**
+	 * Get HashSet<Key> from memcache.
+	 *
+	 * @param modelClass
+	 * 			Acquisition target Model Class.
+	 *
+	 * @return HashSet<Key>.
+	 */
+
 	public static HashSet<Key> getCacheModelKeySet(Class<?> modelClass) {
 
 		ModelUtil.checkModelClass(modelClass);
@@ -87,7 +129,17 @@ public class KeyTableManager {
 		return set;
 	}
 
-	public static KeyTable putDb(Class<?> modelClass, Key key) {
+	/**
+	 * Put datastore and put memcache.
+	 *
+	 * @param modelClass
+	 * 			Memcache target class name.
+	 * @param key
+	 * 			Memcache target key.
+	 * @return
+	 * 			memcached KeyTable.
+	 */
+	public static KeyTable putDbCache(Class<?> modelClass, Key key) {
 
 		ModelUtil.checkModelClass(modelClass);
 
@@ -96,17 +148,16 @@ public class KeyTableManager {
 		return putDbCache(modelClass, list);
 	}
 
-	private static boolean isContainsTargetKeyList(List<Key> keyList, List<Key> targetKeyList) {
-
-		// 今回登録するキーリストがキャッシュに存在するかをチェックする
-		for (Key targetKey : targetKeyList) {
-			if (!keyList.contains(targetKey)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
+	/**
+	 * Put datastore and put memcache.
+	 *
+	 * @param modelClass
+	 * 			Memcache target class name.
+	 * @param addKeyList
+	 * 			Memcache target keyList.
+	 * @return
+	 * 			memcached KeyTable.
+	 */
 	public static KeyTable putDbCache(Class<?> modelClass, List<Key> addKeyList) {
 
 		Logger.info("param modelClass = " + modelClass);
@@ -173,5 +224,17 @@ public class KeyTableManager {
 
 		return keyTableFromDb;
 	}
+
+	private static boolean isContainsTargetKeyList(List<Key> keyList, List<Key> targetKeyList) {
+
+		// 今回登録するキーリストがキャッシュに存在するかをチェックする
+		for (Key targetKey : targetKeyList) {
+			if (!keyList.contains(targetKey)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 
 }

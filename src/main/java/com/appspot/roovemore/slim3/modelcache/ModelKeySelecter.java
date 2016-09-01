@@ -10,8 +10,22 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 
+/**
+ * This service is to get the Model key.
+ *
+ * @author roove
+ *
+ */
 public class ModelKeySelecter {
 
+	/**
+	 * Get keyList.
+	 *
+	 * @param modelClass
+	 * 			Acquisition target class ModelClass.
+	 *
+	 * @return keyList.
+	 */
 	public static <T> List<Key> getKeyList(Class<T> modelClass){
 
 		ModelUtil.checkModelClass(modelClass);

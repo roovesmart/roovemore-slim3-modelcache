@@ -6,6 +6,13 @@ import java.util.List;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ *
+ * Model key's iterable.
+ *
+ * @author roove
+ *
+ */
 public class KeyIterable implements Iterable<Key>{
 
     protected List<Key> list = new ArrayList<Key>();

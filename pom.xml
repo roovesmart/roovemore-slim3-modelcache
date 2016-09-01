@@ -35,15 +35,16 @@
   </repository>
 </distributionManagement>
 -->
-<!--
     <distributionManagement>
         <repository>
+            <!-- uniqueVersionはmaven3系では使えないらしい。
+            <uniqueVersion>false</uniqueVersion>
+             -->
             <id>internal.repos</id>
             <name>Temporary Staging Repository</name>
             <url>file://${project.build.directory}/mvn-repo</url>
         </repository>
     </distributionManagement>
- -->
 
 <build>
   <plugins>
@@ -67,6 +68,7 @@
       <configuration>
         <!-- settings.xmlのserverに事前にユーザ情報を設定しidはgithubとする -->
         <server>github</server>
+        <!-- git push時のコミットコメント -->
         <message>Test11 Maven artifacts for ${project.version}</message>
         <noJekyll>true</noJekyll>
 

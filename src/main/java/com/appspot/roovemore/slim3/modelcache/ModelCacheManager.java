@@ -10,14 +10,28 @@ import org.slim3.memcache.Memcache;
 import com.google.appengine.api.datastore.Key;
 
 /**
- * ModelClassをキャッシュするマネージャです。
  *
- * @author toshiba
+ * This manager class uses slim3's memcache service. and Save the ModelClass to cache.
+ *
+ * @see org.slim3.datastore.Datastore
+ * @see org.slim3.memcache.Memcache
+ *
+ * @author roove
  *
  */
 public class ModelCacheManager {
 
-	// rename 旧メソッド名：getEntityCache
+	/**
+	 * Get model class object from memchace.
+	 *
+	 * @param modelClass
+	 *			Returned class name.
+	 * @param key
+	 * 			memchae key.
+	 * @return
+	 * 		The model class object acquired from memcache.
+	 *
+	 */
 	public static <T> T getModelFromCache(Class<T> modelClass, Key key) {
 
 		ModelUtil.checkModelClass(modelClass);
@@ -36,7 +50,16 @@ public class ModelCacheManager {
 		return model;
 	}
 
-
+	/**
+	 * Get model class objectList from memchace.
+	 *
+	 * @param modelClass
+	 *			Returned class name.
+	 * @param orgKeyList
+	 * 			memchae keyList.
+	 * @return
+	 * 		The model class objectList acquired from memcache.
+	 */
 	public static <T> List<T> getDbList(Class<T> modelClass, List<Key> orgKeyList) {
 
 		ModelUtil.checkModelClass(modelClass);
@@ -52,7 +75,26 @@ public class ModelCacheManager {
 		}
 		return modelList;
 	}
+	/**
+	 * Get model class objectList from memchace.
+	 *
+	 * @param modelClass
+	 *			Returned class name.
+	 * @param orgKeyList
+	 * 			memchae keyList.
+	 * @return
+	 * 		The model class objectList acquired from memcache.
+	 */
 
+	/**
+	 * Get model class objectList from memchace(from KeyTable).
+	 *
+	 * @param modelClass
+	 *			Returned class name.
+	 * @return
+	 * 		The model class objectList acquired from memcache.
+	 */
+	@SuppressWarnings("unchecked")
 	public static <T> List<T> getCacheListFromKeyTable( Class<T> modelClass) {
 
 		ModelUtil.checkModelClass(modelClass);
@@ -103,24 +145,24 @@ public class ModelCacheManager {
 
 			List<T> retList = new ArrayList<T>();
 
-			T q2 = null;
+			T t2 = null;
 			for (Key k : orgKeyList) {
 
-				q2 = (T) cacheMap.get(k);
+				t2 = (T) cacheMap.get(k);
 
-				if (q2 == null) {
+				if (t2 == null) {
 
 					// もしキャッシュになかったら
 
 					// テーブルより取得し、キャッシュに登録する
-					q2 = Datastore.getOrNull(modelClass, k);
-					if(q2!=null){
-						Memcache.put(k, q2);
-						retList.add(q2);
+					t2 = Datastore.getOrNull(modelClass, k);
+					if(t2!=null){
+						Memcache.put(k, t2);
+						retList.add(t2);
 					}
 
 				} else {
-					retList.add(q2);
+					retList.add(t2);
 				}
 			}
 
@@ -128,6 +170,16 @@ public class ModelCacheManager {
 		}
 	}
 
+	/**
+	 * Put datastore and put memcache.
+	 *
+	 * @param modelClass
+	 * 			memcache class name.
+	 * @param model
+	 * 			put object
+	 * @return
+	 * 			memcache key.
+	 */
 	public static <T> Key putDbCache(Class<T> modelClass, T model) {
 
 		// datastoreに登録する
@@ -140,58 +192,10 @@ public class ModelCacheManager {
 		Logger.info( "Memcache.get(key) = " +  Memcache.get(key) );
 
 		// キーリストに追加する。
-		KeyTableManager.putDb(modelClass, key);
+		KeyTableManager.putDbCache(modelClass, key);
 
 		return key;
 	}
-
-	//TODO 汎用キャッシュメソッドは一旦コメントアウト
-//	public static <T> void putGeneralCache(String keyName, T o) {
-//		Memcache.put(keyName, o);
-//	}
-//
-//	public static <T> void putGeneralCache(Class<?> entity, String keyName, T o) {
-//		String key = createGeneralKeyName(entity, keyName);
-//		Memcache.put(key, o);
-//	}
-//
-//	public static <T extends Serializable> void putGeneralCache(
-//			Class<?> entity, String keyName, List<T> list) throws Exception {
-//		String s = S.serializeLIst(list);
-//		putGeneralCache(entity, keyName, s);
-//	}
-//
-//	public static <T extends Serializable> void putGeneralCache(String keyName,
-//			List<T> list) throws Exception {
-//		String s = S.serializeLIst(list);
-//		Memcache.put(keyName, s);
-//	}
-//
-//	public static Object getGeneralCache(Class<?> entity, String keyName) {
-//		String key = createGeneralKeyName(entity, keyName);
-//		return Memcache.get(key);
-//	}
-//
-//	public static Object getGeneralCache(String keyName) {
-//		return Memcache.get(keyName);
-//	}
-//
-//	public static <T extends Serializable> List<T> getGeneralCacheList(
-//			Class<?> entity, String keyName) throws Exception {
-//		String key = createGeneralKeyName(entity, keyName);
-//		Object o = Memcache.get(key);
-//		return S.deserializeList((String) o);
-//	}
-//
-//	public static <T extends Serializable> List<T> getGeneralCacheList(
-//			String keyName) throws Exception {
-//		Object o = Memcache.get(keyName);
-//		return S.deserializeList((String) o);
-//	}
-//
-//	public static String createGeneralKeyName(Class<?> entity, String keyName) {
-//		return entity.getSimpleName() + "_" + keyName;
-//	}
 
 
 }
