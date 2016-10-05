@@ -2,4 +2,25 @@ language: java
 jdk:
   - openjdk6
   - openjdk7
-  - openjdk8
+install: true
+branches:
+  only:
+    - master
+env:
+  global:
+    secure: "eQpdL8KpaRWtCH4Jm2qqzc60k/5K83AQKWO4SFsJAYzFUKEEqL/UKTird9WnhXxk5MmXKGc9qG+fpR84MDrAWpkCp0C13qVbREv1pvbOZYkDChQeNid7iCpZDIDBkYQTkqaDatUkccmZaeccCBOwNKZtjvWTh5s345tNujhmSUZex2ARIJm1Gq1jgosqIjnZiQozO1HhwESWjtrtvvRNaKnR93Q72MNiVAE6FesrkA0F6wokcWQe/iXPg7Zgt/NAuzPG0SCqwuhQuvaoFgf2MZcoEjZx/oPz8Leh3Oqon+Cs8YdPGXgI/ettMaKMpKEExdr22341WwLNjnaSer8kb5t4XEUIAfpz84Ov8QLoWuMOJWOAFrVoq0Su9nZ5g7McWseW/q0sQcnoyxu61HI3m85NRfBnhQORa3l0MqfSC/Z5Mg1ZszFLEtmmjoUS3ydaqzm5yACyhQRNKnmO0jaKJHPd1yXkLYvjfQbZDoSv0psEZeDSI4bwyyo3Xu8VF5k0X+fep2u9gzBPnaBtbWIiyqY4/dUkprv0wpXYs9qaulsYqKdHHS/N5YMg53Q1qt5vKUYvUD+a875mEIHfn+HEsmP+7jcXTZEyH3va/Vs6ttGKiMzuCUmiqEGSdVTnB4yXR+gPRMo8I2MkBSAbDjXCKEmAFYU019WJ2XzbsVNcxTk="
+before_script:
+  - echo "before_script start"
+  - echo "before_script end"
+script:
+  - echo "script start"
+  - mvn deploy
+  - echo "script end"
+after_script:
+  - echo "after_script start"
+  - echo "after_script end"
+after_success:
+  - echo "after_success"
+after_failure:
+  - echo "after_failure"
+
