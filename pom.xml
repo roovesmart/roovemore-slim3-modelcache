@@ -36,6 +36,21 @@
 			<!-- https://raw.github.com/(Gitユーザ名)/(Gitリポジトリ名)/(Mavenリポジトリ用ブランチ名)/ -->
 			<url>https://raw.github.com/roovesmart/roovemore-common/mvn-repo</url>
 		</repository>
+
+		<repository>
+			<id>slim3-snapshot-repo</id>
+			<url>http://slim3.github.com/slim3/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+
+
 	</repositories>
 
 	<dependencies>
